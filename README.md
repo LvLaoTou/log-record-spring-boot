@@ -68,13 +68,13 @@ public void updateUserStatus(long userId, UserStatus status){
 
 ```java
 <dependency>
-    <groupId>com.lj.log</groupId>
+    <groupId>io.github.lvlaotou</groupId>
     <artifactId>log-record-spring-boot-starter</artifactId>
     <version>${version}</version>
 </dependency>
 ```
 
-1. 「**必须**」实现`com.lj.record.spring.boot.core.OperatorService` 接口，并向Spring注册bean。此接口是为了获取操作人，参考：
+1. 「**必须**」实现`core.boot.spring.record.log.io.github.lvlaotou.log.record.OperatorService` 接口，并向Spring注册bean。此接口是为了获取操作人，参考：
 
 ```java
 @Service
@@ -87,7 +87,7 @@ public class TestOperatorServiceImpl implements OperatorService {
 }
 ```
 
-1. 「**建议**」实现`com.lj.record.spring.boot.core.LogRecordService` 接口，并向Spring注册bean。此接口是为了记录操作日志，提供一个默认实现，如下：
+1. 「**建议**」实现`core.boot.spring.record.log.io.github.lvlaotou.log.record.LogRecordService` 接口，并向Spring注册bean。此接口是为了记录操作日志，提供一个默认实现，如下：
 
 ```java
 @Slf4j
@@ -193,7 +193,7 @@ https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#ao
 
 ## 常用对象
 
-- com.lj.record.spring.boot.core.LogRecord 记录操作日志的注解，用于方法上，参数如下：
+- core.boot.spring.record.log.io.github.lvlaotou.log.record.LogRecord 记录操作日志的注解，用于方法上，参数如下：
 
 ```java
 public @interface LogRecord {
@@ -237,7 +237,7 @@ public @interface LogRecord {
 }
 ```
 
-- com.lj.record.spring.boot.core.OperateTypeEnum 操作类型，用于区分日志的操作类，目前支持的类型如下：
+- core.boot.spring.record.log.io.github.lvlaotou.log.record.OperateTypeEnum 操作类型，用于区分日志的操作类，目前支持的类型如下：
 
 ```java
 public enum OperateTypeEnum{
@@ -266,7 +266,7 @@ public enum OperateTypeEnum{
 }
 ```
 
-- com.lj.record.spring.boot.core.Operator 当前操作人，定义如下：
+- core.boot.spring.record.log.io.github.lvlaotou.log.record.Operator 当前操作人，定义如下：
 
 ```java
 public class Operator {
@@ -279,7 +279,7 @@ public class Operator {
 }
 ```
 
-- com.lj.record.spring.boot.core.OperatorService 自定义当前操作人，定义如下：
+- core.boot.spring.record.log.io.github.lvlaotou.log.record.OperatorService 自定义当前操作人，定义如下：
 
 ```java
 public interface OperatorService {
@@ -292,7 +292,7 @@ public interface OperatorService {
 }
 ```
 
-- com.lj.record.spring.boot.core.Record 日志记录对象，保存日志数据的对象，定义如下：
+- core.boot.spring.record.log.io.github.lvlaotou.log.record.Record 日志记录对象，保存日志数据的对象，定义如下：
 
 ```java
 public class Record {
@@ -317,7 +317,7 @@ public class Record {
 }
 ```
 
-- com.lj.record.spring.boot.core.LogRecordService 自定义操作日志记录逻辑，定义如下：
+- core.boot.spring.record.log.io.github.lvlaotou.log.record.LogRecordService 自定义操作日志记录逻辑，定义如下：
 
 ```java
 public interface LogRecordService {

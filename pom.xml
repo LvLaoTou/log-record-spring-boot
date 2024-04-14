@@ -3,18 +3,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.lj.log</groupId>
-	<artifactId>log-record-spring-boot</artifactId>
-	<version>1.0.0</version>
-	<packaging>pom</packaging>
-	<name>log-record-spring-boot</name>
-	<description>log-record-spring-boot-starter</description>
+	<groupId>io.github.lvlaotou</groupId>
+	<artifactId>log-record-spring-boot-starter</artifactId>
+	<version>0.0.1</version>
+	<packaging>jar</packaging>
 
-	<modules>
-		<module>log-record-spring-boot-autoconfigure</module>
-		<module>log-record-spring-boot-starter</module>
-		<module>log-record-core</module>
-	</modules>
+	<name>log-record-spring-boot-starter</name>
+	<description>log-record-spring-boot-starter</description>
+    <url>https://github.com/LvLaoTou/log-record-spring-boot</url>
+
+    <licenses>
+      <license>
+        <name>BSD 3-Clause License</name>
+        <url>https://github.com/LvLaoTou/log-record-spring-boot/blob/master/LICENSE</url>
+      </license>
+    </licenses>
+
+    <developers>
+        <developer>
+          <name>LvLaoTou</name>
+          <email>CoderLvJie@foxmail.com</email>
+          <organization>Free</organization>
+          <organizationUrl>https://github.com/LvLaoTou</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+      <connection>scm:git:git://github.com/LvLaoTou/log-record-spring-boot.git</connection>
+      <developerConnection>scm:git:ssh://github.com:LvLaoTou/log-record-spring-boot.git</developerConnection>
+      <url>https://github.com/LvLaoTou/log-record-spring-boot/master</url>
+    </scm>
 
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,10 +60,115 @@
     <dependencies>
         <!-- Lombok 插件 -->
         <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <optional>true</optional>
-            </dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- 自动配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!--aop-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+              <groupId>org.sonatype.central</groupId>
+              <artifactId>central-publishing-maven-plugin</artifactId>
+              <version>0.4.0</version>
+              <extensions>true</extensions>
+              <configuration>
+                <publishingServerId>ossrh</publishingServerId>
+                <tokenAuth>true</tokenAuth>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.sonatype.plugins</groupId>
+              <artifactId>nexus-staging-maven-plugin</artifactId>
+              <version>1.6.13</version>
+              <extensions>true</extensions>
+              <configuration>
+                 <serverId>ossrh</serverId>
+                 <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                 <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+              <version>3.0.1</version>
+              <configuration>
+                <autoVersionSubmodules>true</autoVersionSubmodules>
+                <useReleaseProfile>false</useReleaseProfile>
+                <releaseProfiles>release</releaseProfiles>
+                <goals>deploy</goals>
+              </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-source-plugin</artifactId>
+                      <version>3.3.1</version>
+                      <executions>
+                        <execution>
+                          <id>attach-sources</id>
+                          <goals>
+                            <goal>jar-no-fork</goal>
+                          </goals>
+                        </execution>
+                      </executions>
+                    </plugin>
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-javadoc-plugin</artifactId>
+                      <version>3.6.3</version>
+                      <executions>
+                        <execution>
+                          <id>attach-javadocs</id>
+                          <goals>
+                            <goal>jar</goal>
+                          </goals>
+                        </execution>
+                      </executions>
+                    </plugin>
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-gpg-plugin</artifactId>
+                      <version>3.2.3</version>
+                      <executions>
+                        <execution>
+                          <id>sign-artifacts</id>
+                          <phase>verify</phase>
+                          <goals>
+                            <goal>sign</goal>
+                          </goals>
+                            <configuration>
+                              <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                              </gpgArguments>
+                            </configuration>
+                        </execution>
+                      </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
